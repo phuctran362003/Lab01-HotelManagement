@@ -7,6 +7,7 @@ package business_layer.servicies.implement;
 import business_layer.entities.Hotel;
 import business_layer.servicies.IService;
 import data_layer.implement.HotelDAO;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,11 +41,13 @@ public class HotelService implements IService<Hotel> {
             throw new Exception("Hotel is already existed!");
         }
     }
-/**
- * Return a hotel by ID
- * @param id The ID of the hotel to return
- * @return the hotel with inputted ID, or null if not found
- */
+
+    /**
+     * Return a hotel by ID
+     *
+     * @param id The ID of the hotel to return
+     * @return the hotel with inputted ID, or null if not found
+     */
     @Override
     public Hotel getById(String id) {
         List<Hotel> hotels = hotelDAO.getHotelList();
@@ -56,26 +59,75 @@ public class HotelService implements IService<Hotel> {
         return null;
     }
 
-    
-
     @Override
-    public void delete(Hotel object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void delete(Hotel hotel) throws Exception {
+        //check if hotel exits
+        Hotel listHotel = getById(hotel.getId());
+        if (listHotel != null) {
+            hotelDAO.delete(listHotel);
+
+        } else {
+            throw new Exception("Not found");
+        }
+
     }
 
     @Override
     public void printAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        hotelDAO.loadDataFromFile();
+
+        List<Hotel> hotels = hotelDAO.getHotelList();
+        for (Hotel hotel : hotels) {
+            System.out.println(hotel);
+        }
     }
 
     @Override
-    public void search() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void update(Hotel hotelToUpdate, Hotel hotelInformation) throws Exception {
+        //update hotel information
+
+        //update hotelName
+        //if user enter information, then update. If leave it blank, do nothing.
+        if (!hotelInformation.getName().isEmpty()) {
+            hotelToUpdate.setName(hotelInformation.getName());
+        }
+
+        //update hotelRoomAvailable
+        if (!Integer.toString(hotelInformation.getRoom_available()).isEmpty()) {
+            hotelToUpdate.setRoom_available(hotelInformation.getRoom_available());
+        }
+
+        //update hotelPhoneNumber
+        if (hotelInformation.getPhone().isEmpty()) {
+            hotelToUpdate.setPhone(hotelInformation.getPhone());
+
+        }
+
+        //update hotelAddress
+        if (hotelInformation.getAddress().isEmpty()) {
+            hotelToUpdate.setAddress(hotelInformation.getAddress());
+
+        }
+
+        hotelDAO.writeToFile();
     }
 
     @Override
-    public void update(Hotel object, Hotel objectInfo) throws Exception {
-        
+    public List<Hotel> search(Hotel hotel, String attribute) {
+        List<Hotel> listFound;
+        //tùy theo thuộc tính muốn search là gì mà chuyển tới trường hợp đó
+        switch (attribute) {
+            case "id":
+                listFound = hotelDAO.findById(hotel.getId());
+                break;
+            case "name":
+                listFound = hotelDAO.findByName(hotel.getName());
+                break;
+            default:
+                listFound = new ArrayList<>();
+                break;
+        }
+        return listFound;
     }
 
 }

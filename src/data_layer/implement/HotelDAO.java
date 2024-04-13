@@ -12,6 +12,7 @@ import java.util.List;
 import business_layer.config.CommonConfig;
 import business_layer.entities.Hotel;
 import data_layer.IHotelDAO;
+import java.util.AbstractList;
 
 public class HotelDAO implements IHotelDAO<Hotel> {
 
@@ -135,4 +136,36 @@ public class HotelDAO implements IHotelDAO<Hotel> {
         writeToFile();
     }
 
+    /**
+     * find hotel by its ID
+     *
+     * @param id the ID to search
+     * @return Hotel if matched the ID
+     */
+   public List<Hotel> findById(String id) {
+        List<Hotel> list = new ArrayList<>();
+        for (Hotel hotel : hotelList) {
+            if (hotel.getId().toUpperCase().contains(id.toUpperCase())) {
+                list.add(hotel);
+            }
+        }
+        return list;
+    }
+    
+    /**
+     * find hotels by their name
+     * @param name the Name to search
+     * @return List of hotels that contains inputted name
+     */
+
+    public List<Hotel> findByName(String name) {
+        List<Hotel> list = new ArrayList<>();
+        for (Hotel hotel : hotelList) {
+            // Add hotel to the list if the name contains the given name
+            if (hotel.getName().toUpperCase().contains(name.toUpperCase())) {
+                list.add(hotel);
+            }
+        }
+        return list;
+    }
 }

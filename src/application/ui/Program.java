@@ -4,7 +4,7 @@
  */
 package application.ui;
 
-import application.ui.implement.Menu;
+import application.ui.implement.MenuUI;
 
 /**
  *
@@ -12,7 +12,7 @@ import application.ui.implement.Menu;
  */
 public class Program {
     public static void main(String[] args) {
-        Menu menu = new Menu();
+        MenuUI menu = new MenuUI();
         
         //add options
         menu.addOptions();
@@ -20,5 +20,7 @@ public class Program {
         
         //process menu
         menu.processHotel();
+        
+        menu.showMenu();
     }
 }

@@ -30,15 +30,20 @@ public class CommonConfig {
      */
     public static final String REGEX_PHONE = "\\d{10}";
 
-    
     /**
      * regex pattern for yes/no inputs
      */
     public static final String REGEX_YN = "[YyNn]";
+
+    /**
+     *
+     */
+    public static final String FORMAT_STIRNG_HOTEL = "%-10S | %-20S | %-10S | %-10S | %-10s | %s";
     
     /**
      * 
      */
-    public static final String FORMAT_STIRNG_HOTEL ="%-10S | %-20S | %-10S | %-10S | %-10s | %s";
+
+    public static String REGEX_STRING = ".*";
 
 }

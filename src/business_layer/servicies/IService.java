@@ -4,6 +4,8 @@
  */
 package business_layer.servicies;
 
+import java.util.List;
+
 /**
  *
  * @author phuctrann
@@ -14,9 +16,9 @@ public interface IService<T> {
 
     T getById(String id);
 
-    void search();
+    List<T> search(T object, String attribute);
 
-    void update(T object, T objectInfo) throws Exception;
+    void update(T objectBeUpdated, T objectInformation) throws Exception;
 
     void delete(T object) throws Exception;
 
